@@ -1,8 +1,14 @@
 package com.black;
 
+import com.black.customer.Customer;
+import com.black.customer.CustomerRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 
@@ -14,12 +20,23 @@ public class Main {
 
         ConfigurableApplicationContext run = SpringApplication.run(Main.class, args);
 
-        String[] beanDefinitionNames = run.getBeanDefinitionNames();
-        for (String beanDefinitionName : beanDefinitionNames) {
-//            System.out.println(beanDefinitionName);
 
-        }
+    }
 
+    //bootstrapping the application
+
+    @Bean
+    CommandLineRunner runner(CustomerRepository customerRepository){
+
+        Customer david = new Customer( "David", "davidtzirima@gmail.com", 12);
+
+        Customer tafadzwa = new Customer("tafadzwa", "tafadzwa@gmail.com", 12);
+
+        return  args -> {
+            List<Customer> david1 = List.of(david, tafadzwa);
+            customerRepository.saveAll(david1);
+
+        };
     }
 
 

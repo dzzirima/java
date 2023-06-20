@@ -8,8 +8,6 @@ import java.util.Optional;
 
 @Repository("list")
 public class CustomerListDataAccessService implements CustomerDao {
-
-
     public CustomerListDataAccessService() {
     }
 
@@ -34,9 +32,31 @@ public class CustomerListDataAccessService implements CustomerDao {
         return customers.stream().
                 filter(c -> c.getId().equals(id))
                 .findFirst();
+    }
+
+    @Override
+    public void insertUser(Customer customer) {
+        customers.add(customer);
+    }
+
+    @Override
+    public boolean existsPersonWithEmail(String email) {
+        return customers.stream().anyMatch(c -> c.getEmail().equals(email));
+    }
+
+    @Override
+    public void deleteCustomer(Integer customerId) {
 
 
+    }
 
+    @Override
+    public boolean customerExistById(Integer customerId) {
+        return false;
+    }
+
+    @Override
+    public void updateCustomerDetails(Customer customer) {
 
     }
 }

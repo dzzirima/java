@@ -12,5 +12,15 @@ public interface CustomerDao {
 
     List<Customer> selectAllCustomers ();
     Optional<Customer> selectCustomerById (Integer id);
+    void insertUser(Customer customer);
+
+    boolean existsPersonWithEmail(String email);
+    void  deleteCustomer(Integer customerId);
+
+    boolean customerExistById(Integer customerId);
+
+    void updateCustomerDetails(Customer customer);
+
+
 
 }
