@@ -1,6 +1,9 @@
 package com.black.customer;
 // this is a controller class which intercepts all the http requests
 
+import com.black.customer.domain.Customer;
+import com.black.customer.utils.CustomerRegistrationRequest;
+import com.black.customer.utils.CustomerUpdateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

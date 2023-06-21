@@ -1,5 +1,6 @@
 package com.black.customer;
 
+import com.black.customer.domain.Customer;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

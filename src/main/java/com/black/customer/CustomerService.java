@@ -1,12 +1,14 @@
 package com.black.customer;
 
+import com.black.customer.domain.Customer;
+import com.black.customer.utils.CustomerRegistrationRequest;
+import com.black.customer.utils.CustomerUpdateRequest;
 import com.black.exception.DuplicateResourceException;
 import com.black.exception.ResourceNotFound;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -74,30 +76,24 @@ public class CustomerService {
          * if name has changed
          */
 
-        if(customerUpdateRequest.name() != null && !customerUpdateRequest.name().equals(customer.getName())){
+        if (customerUpdateRequest.name() != null && !customerUpdateRequest.name().equals(customer.getName())) {
             customer.setName(customerUpdateRequest.name());
             changes = true;
         }
 
         customer.setAge(customerUpdateRequest.age());
 
-        if(customerUpdateRequest.email() != null && !customerUpdateRequest.email().equals(customer.getEmail())){
+        if (customerUpdateRequest.email() != null && !customerUpdateRequest.email().equals(customer.getEmail())) {
             // check if email is not taken
-            if(customerDao.existsPersonWithEmail(customerUpdateRequest.email())){
-                throw  new DuplicateResourceException("email already taken");
+            if (customerDao.existsPersonWithEmail(customerUpdateRequest.email())) {
+                throw new DuplicateResourceException("email already taken");
             }
             customer.setEmail(customerUpdateRequest.email());
         }
 
 
-
-
-
-
         //save new customer
         customerDao.updateCustomerDetails(customer);
-
-
 
 
     }

@@ -1,5 +1,7 @@
-package com.black.customer;
+package com.black.customer.utils;
 
+import com.black.customer.CustomerDao;
+import com.black.customer.domain.Customer;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

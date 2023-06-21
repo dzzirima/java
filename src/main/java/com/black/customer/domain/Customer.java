@@ -1,7 +1,6 @@
-package com.black.customer;
+package com.black.customer.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.util.Objects;
 
