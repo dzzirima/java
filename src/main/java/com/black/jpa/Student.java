@@ -3,6 +3,9 @@ package com.black.jpa;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Student {
     @Id
@@ -15,15 +18,62 @@ public class Student {
             strategy = GenerationType.SEQUENCE,
             generator = "student_sequence"
     )
+    @Column(
+            name = "id",
+            updatable = false
+
+    )
 
     private Long id;
+
+    @Column(
+            name = "first_name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String firstName;
     private String lastName;
+    @Column(
+            unique = true
+    )
     private String email;
+
     private Integer age;
 
-    public Student(Long id, String firstName, String lastName, String email, Integer age) {
+
+    //relationship fields
+
+    @OneToOne(
+            mappedBy = "student" ,
+            orphanRemoval = true
+    )
+    private StudentCard studentIdCard;
+
+
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "borrower",
+            fetch = FetchType.EAGER
+    )
+    private List< Book> booksBorrowed = new ArrayList<>();
+
+
+
+    private List<Courses>  coursesList = new ArrayList<>();
+
+    public Student(Long id, String firstName, String  lastName, String email, Integer age) {
         this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.age = age;
+    }
+
+    public Student() {
+    }
+
+    public Student(String firstName, String lastName, String email, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -70,6 +120,27 @@ public class Student {
         this.age = age;
     }
 
+    // additional methods
+    // 1 .  setter
+
+    public void addBook(Book book){
+        if(!this.booksBorrowed.contains(book)){
+            this.booksBorrowed.add(book);
+            book.setBorrower(this); // bidirectional relationship
+        }
+    }
+
+    public void removeBook(Book book){
+        if(this.booksBorrowed.contains(book)){
+            this.booksBorrowed.remove(book);
+            book.setBorrower(null); // remove the reference ...
+        }
+    }
+
+    public List<Book> getBooksBorrowed() {
+        return booksBorrowed;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -78,6 +149,8 @@ public class Student {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 ", age=" + age +
+                ", studentIdCard=" + studentIdCard +
+                ", booksBorrowed=" + booksBorrowed +
                 '}';
     }
 }

@@ -50,9 +50,9 @@ public class Customer {
     }
 
     public Customer() {
-        }
+    }
 
-        public Integer getId() {
+    public Integer getId() {
             return id;
         }
 
